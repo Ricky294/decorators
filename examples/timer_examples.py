@@ -1,4 +1,4 @@
-from src.timer import *
+from decorators.timer import *
 
 
 @timeit

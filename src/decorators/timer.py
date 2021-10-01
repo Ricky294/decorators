@@ -4,7 +4,9 @@ from typing import Callable, Union
 from functools import wraps
 
 
-__all__ = ['delay', 'timeit', 'only_between_time', 'schedule_run']
+__all__ = [
+    'delay', 'timeit', 'only_between_time', 'schedule_run'
+]
 
 
 def _date_to_datetime(dt: datetime.date):
@@ -60,8 +62,8 @@ def only_between_time(_func: Callable = None, *, start=datetime.time(hour=8), en
 
     if _func is None:
         return decorator
-    else:
-        return decorator(_func)
+
+    return decorator(_func)
 
 
 def schedule_run(when: Union[datetime.datetime, datetime.time, datetime.date, int, float]):

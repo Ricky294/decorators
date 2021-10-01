@@ -1,10 +1,12 @@
 from decimal import Decimal
 from functools import wraps
-from typing import Callable, Iterable, Union, Dict, Any
-
-__all__ = ['to_datetime', 'to_date', 'to_time', 'to_dataframe', 'to_series']
+from typing import Callable, Iterable, Dict, Any
 
 import numpy as np
+
+__all__ = [
+    'to_datetime', 'to_date', 'to_time', 'to_dataframe', 'to_series'
+]
 
 
 def to_datetime(_func: Callable = None, *, unit='s'):
@@ -31,8 +33,8 @@ def to_datetime(_func: Callable = None, *, unit='s'):
 
     if _func is None:
         return decorator
-    else:
-        return decorator(_func)
+
+    return decorator(_func)
 
 
 def to_date(_func: Callable = None, *, unit='s'):
@@ -45,8 +47,8 @@ def to_date(_func: Callable = None, *, unit='s'):
 
     if _func is None:
         return decorator
-    else:
-        return decorator(_func)
+
+    return decorator(_func)
 
 
 def to_time(_func: Callable = None, *, unit='s'):
@@ -59,8 +61,8 @@ def to_time(_func: Callable = None, *, unit='s'):
 
     if _func is None:
         return decorator
-    else:
-        return decorator(_func)
+
+    return decorator(_func)
 
 
 def to_dataframe(
@@ -104,8 +106,8 @@ def to_dataframe(
 
     if _func is None:
         return decorator
-    else:
-        return decorator(_func)
+
+    return decorator(_func)
 
 
 def to_series(
@@ -145,6 +147,5 @@ def to_series(
 
     if _func is None:
         return decorator
-    else:
-        return decorator(_func)
 
+    return decorator(_func)

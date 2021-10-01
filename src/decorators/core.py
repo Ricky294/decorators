@@ -1,7 +1,27 @@
-from typing import Callable, Type, Tuple, List
+from typing import Callable, Type, Dict, Iterable, Union
 from functools import wraps
+import pandas as pd
+import numpy as np
+import random
 
-__all__ = ['not_none_or_empty',  'not_none', 'repeat', 'shuffle', 'singleton', 'count_calls']
+__all__ = [
+    'return_not_none_or_empty', 'return_not_none', 'repeat', 'shuffle',
+    'singleton', 'count_calls', 'flatten_dict'
+]
+
+
+def flatten_dict(_func: Callable[..., Dict] = None, *, sep: str = '.'):
+    def decorator(func: Callable[..., Dict]):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            ret = func(*args, **kwargs)
+            [flat_dict] = pd.json_normalize(ret, sep=sep).to_dict(orient='records')
+            return flat_dict
+        return wrapper
+
+    if _func is None:
+        return decorator
+    return decorator(_func)
 
 
 def count_calls(func):
@@ -33,7 +53,27 @@ def singleton(cls: Type):
     return wrapper
 
 
-def not_none(func: Callable):
+def required(func: Callable):
+    """
+    Raises ValueError if any argument or keyword argument is ``None``.
+    """
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        for i, arg in enumerate(args):
+            if arg is None:
+                raise ValueError(f'Argument at index {i!r} is None.')
+        for key, val in kwargs.items():
+            if val is None:
+                raise ValueError(f'Keyword argument {key!r} is None!')
+
+        val = func(*args, **kwargs)
+        return val
+
+    return wrapper
+
+
+def return_not_none(func: Callable):
     """
     Raises ValueError if the return value is ``None``.
     """
@@ -47,7 +87,7 @@ def not_none(func: Callable):
     return wrapper
 
 
-def not_none_or_empty(func: Callable):
+def return_not_none_or_empty(func: Callable):
     """
     Raises ValueError if the return value is ``None`` or empty.
     """
@@ -81,48 +121,27 @@ def repeat(_func: Callable = None, *, times=2):
 
     if _func is None:
         return decorator
-    else:
-        return decorator(_func)
+
+    return decorator(_func)
 
 
-def shuffle(_func: Callable = None, *, in_place=False):
+def shuffle(func: Callable[..., Union[Iterable, np.ndarray]]):
     """
-    Randomly shuffles the items in the container.
+    Shuffles all the items in place.
     """
 
-    import numpy as np
+    @wraps(func)
+    def wrapper(*args, **kwargs):
 
-    def decorator(func: Callable):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            import random
+        arr = func(*args, **kwargs)
 
-            arr = func(*args, **kwargs)
+        if isinstance(arr, np.ndarray):
+            np.random.shuffle(arr)
 
-            if isinstance(arr, np.ndarray):
-                if in_place:
-                    np.random.shuffle(arr)
-                else:
-                    arr_copy = np.ndarray.copy(arr)
-                    np.random.shuffle(arr_copy)
-                    return arr_copy
-            elif isinstance(arr, List):
-                if in_place:
-                    random.shuffle(arr)
-                else:
-                    return random.sample(arr, len(arr))
-            elif isinstance(arr, Tuple):
-                if in_place:
-                    arr = tuple(random.sample(arr, len(arr)))
-                else:
-                    return tuple(random.sample(arr, len(arr)))
+        elif isinstance(arr, Iterable):
+            arr = list(arr)
+            random.shuffle(arr)
 
-            return arr
+        return arr
 
-        return wrapper
-
-    if _func is None:
-        return decorator
-    else:
-        return decorator(_func)
-
+    return wrapper

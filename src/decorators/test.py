@@ -13,5 +13,3 @@ def debug_print(func: Callable):
         print(f"{func.__name__}({signature}) returned {ret!r}")
         return ret
     return wrapper
-
-

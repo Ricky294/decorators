@@ -1,7 +1,9 @@
-__all__ = ['read_lines', 'read_json']
-
 from functools import wraps
 from typing import Callable
+
+__all__ = [
+    'read_lines', 'read_json'
+]
 
 
 def read_lines(path: str, *, filter_empty=True):

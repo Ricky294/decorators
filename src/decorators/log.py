@@ -122,6 +122,9 @@ def create_logger(
     :param formatter: Formats log messages.
     """
 
+    if not console_log and file_path is None:
+        raise LogError('Both console and file logging is disabled.')
+
     if name in __logger_names:
         raise LogError(f'Logger already created with {name}!')
 

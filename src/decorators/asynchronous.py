@@ -1,7 +1,9 @@
 from typing import Iterable, Callable
 from functools import wraps
 
-__all__ = ['run_forever', 'run_thread', 'run_thread_pool', 'run_process']
+__all__ = [
+    'run_forever', 'run_thread', 'run_thread_pool', 'run_process'
+]
 
 
 def run_thread(_func: Callable = None, *, daemon=False):
@@ -19,8 +21,8 @@ def run_thread(_func: Callable = None, *, daemon=False):
 
     if _func is None:
         return decorator
-    else:
-        return decorator(_func)
+
+    return decorator(_func)
 
 
 def run_thread_pool(args: Iterable):
@@ -59,8 +61,8 @@ def do_on_user_input(_func: Callable = None, *, prompt=''):
 
     if _func is None:
         return decorator
-    else:
-        return decorator(_func)
+
+    return decorator(_func)
 
 
 def non_blocking_user_input(func: Callable):
@@ -107,8 +109,7 @@ def run_on_every(_func: Callable = None, *, seconds=1.0):
 
     if _func is None:
         return decorator
-    else:
-        return decorator(_func)
+    return decorator(_func)
 
 
 def run_forever(func: Callable):
