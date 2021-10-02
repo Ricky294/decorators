@@ -1,7 +1,7 @@
 import logging
 
 import pytest
-from decorators.log import *
+from decorators.log import create_logger, log_return, log_exception, inject_logger, LogError
 from tests import join_to_absolute_path
 
 _LOGGER1 = 'test_logger1'

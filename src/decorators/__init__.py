@@ -1,3 +1,5 @@
+# flake8: noqa
+
 from .asynchronous import run_thread, run_thread_pool, run_process, run_forever
 from .convert import to_datetime, to_date, to_time, to_dataframe, to_series
 from .core import return_not_none_or_empty, repeat, shuffle, return_not_none, singleton, count_calls, flatten_dict

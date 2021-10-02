@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from decorators.core import *
+from decorators.core import flatten_dict, shuffle, return_not_none_or_empty, count_calls, singleton
 
 
 def test_flatten_dict():

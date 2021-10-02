@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from decorators.convert import *
+from decorators.convert import to_series, to_dataframe
 
 
 class DictObject:
@@ -87,4 +87,3 @@ def test_to_dataframe():
     assert dict_object_to_dataframe().equals(df)
     assert nparray_to_dataframe().equals(df)
     assert series_to_dataframe().equals(pd.DataFrame([5, 10, 15, 20, 25, 30]))
-

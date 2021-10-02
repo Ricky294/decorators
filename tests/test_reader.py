@@ -1,6 +1,6 @@
 import json
 
-from decorators.reader import *
+from decorators.reader import read_lines, read_json
 from tests import join_to_absolute_path
 
 file_content = ['line 1\n', 'line 2\n', '\n', 'line 3\n', '\n', '\n', 'line 4']

@@ -1,5 +1,5 @@
 from functools import wraps
-from typing import Callable, Iterable
+from typing import Callable, Iterable, Union, List
 import logging
 
 __all__ = [
@@ -7,7 +7,7 @@ __all__ = [
     'LogError'
 ]
 
-__logger_names = []
+__logger_names: List[str] = []
 
 
 def logger_names():
@@ -79,7 +79,7 @@ def log_exception(name: str, exc_info=True):
     return decorator
 
 
-def inject_logger(name: [Iterable[str], str]):
+def inject_logger(name: Union[Iterable[str], str]):
     """
     Adds the injected logger to your function.
 
