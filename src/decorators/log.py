@@ -1,5 +1,5 @@
 from functools import wraps
-from typing import Callable, Iterable, Union, List
+from typing import Callable, Iterable, Union, List, Optional, Set
 import logging
 
 __all__ = [
@@ -7,7 +7,7 @@ __all__ = [
     'LogError'
 ]
 
-__logger_names: List[str] = []
+__logger_names: Set[str] = set()
 
 
 def logger_names():
@@ -108,11 +108,14 @@ def inject_logger(name: Union[Iterable[str], str]):
 
 
 def create_logger(
-        name: str, file_path: str = None, level=logging.DEBUG, console_log=True,
-        formatter=logging.Formatter(
-            fmt='%(levelname)s:%(name)s:%(asctime)s - %(message)s',
-            datefmt='%Y-%m-%d %H:%M:%S'
-        )
+    name: str,
+    file_path: str = None,
+    level: int = logging.DEBUG,
+    console_log: bool = True,
+    formatter: logging.Formatter = logging.Formatter(
+        fmt='%(levelname)s:%(name)s:%(asctime)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
 ):
     """
     :param name: Name of logger.
@@ -142,7 +145,7 @@ def create_logger(
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)
 
-    __logger_names.append(logger.name)
+    __logger_names.add(logger.name)
     return logger
 
 
