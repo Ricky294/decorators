@@ -1,5 +1,6 @@
 from functools import wraps
-from typing import Callable
+from os import PathLike
+from typing import Callable, Union
 
 __all__ = [
     'read_lines', 'read_json'
@@ -24,7 +25,7 @@ def read_lines(path: str, *, filter_empty=True):
     return decorator
 
 
-def read_json(path: str):
+def read_json(path: Union[str, bytes, PathLike, int]):
     from typing import Dict
 
     def decorator(func: Callable[..., Dict]):

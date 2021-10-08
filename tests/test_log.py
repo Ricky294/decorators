@@ -1,8 +1,8 @@
 import logging
+import os.path
 
 import pytest
 from decorators.log import create_logger, log_return, log_exception, inject_logger, LogError
-from tests import join_to_absolute_path
 
 _LOGGER1 = 'test_logger1'
 _LOGGER2 = 'test_logger2'
@@ -11,8 +11,8 @@ _EXCEPTION_LOGGER = 'test_exception_logger'
 
 
 create_logger(_LOGGER1)
-create_logger(_LOGGER2, file_path=join_to_absolute_path('logs', f'{_LOGGER2}.log'))
-create_logger(_EXCEPTION_LOGGER, file_path=join_to_absolute_path('logs', f'{_EXCEPTION_LOGGER}.log'))
+create_logger(_LOGGER2, file_path=os.path.join('tests', 'logs', f'{_LOGGER2}.log'))
+create_logger(_EXCEPTION_LOGGER, file_path=os.path.join('tests', 'logs', f'{_EXCEPTION_LOGGER}.log'))
 
 
 def test_log_return():

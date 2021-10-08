@@ -1,7 +1,7 @@
 import json
+import os
 
 from decorators.reader import read_lines, read_json
-from tests import join_to_absolute_path
 
 file_content = ['line 1\n', 'line 2\n', '\n', 'line 3\n', '\n', '\n', 'line 4']
 json_content = {
@@ -14,29 +14,29 @@ json_content = {
             }
         }
 
-with open(join_to_absolute_path('resources', 'file_with_lines.txt'), 'w') as f:
+with open(os.path.join("tests", 'resources', 'file_with_lines.txt'), 'w') as f:
     f.writelines(file_content)
 
-with open(join_to_absolute_path('resources', 'json_file.json'), 'w') as f:
+with open(os.path.join("tests", "resources", "json_file.json"), 'w') as f:
     f.write(json.dumps(json_content))
 
 
-@read_lines(join_to_absolute_path("resources", "empty_file.txt"))
+@read_lines(os.path.join("tests", "resources", "empty_file.txt"))
 def read_lines_empty_file():
     return read_lines_empty_file.lines
 
 
-@read_lines(join_to_absolute_path("resources", "file_with_lines.txt"))
+@read_lines(os.path.join("tests", "resources", "file_with_lines.txt"))
 def read_lines_filter_empty():
     return read_lines_filter_empty.lines
 
 
-@read_lines(join_to_absolute_path("resources", "file_with_lines.txt"), filter_empty=False)
+@read_lines(os.path.join("tests", "resources", "file_with_lines.txt"), filter_empty=False)
 def read_lines():
     return read_lines.lines
 
 
-@read_json(join_to_absolute_path("resources", "json_file.json"))
+@read_json(os.path.join("tests", "resources", "json_file.json"))
 def read_json():
     return read_json.json
 
