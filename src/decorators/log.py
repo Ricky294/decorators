@@ -1,5 +1,5 @@
 from functools import wraps
-from typing import Callable, Iterable, Union, List, Optional, Set
+from typing import Callable, Iterable, Union, Set
 import logging
 
 __all__ = [
