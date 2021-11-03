@@ -21,22 +21,22 @@ with open(os.path.join("tests", "resources", "json_file.json"), 'w') as f:
     f.write(json.dumps(json_content))
 
 
-@read_lines(os.path.join("tests", "resources", "empty_file.txt"))
+@read_lines("tests", "resources", "empty_file.txt")
 def read_lines_empty_file():
     return read_lines_empty_file.lines
 
 
-@read_lines(os.path.join("tests", "resources", "file_with_lines.txt"))
+@read_lines("tests", "resources", "file_with_lines.txt")
 def read_lines_filter_empty():
     return read_lines_filter_empty.lines
 
 
-@read_lines(os.path.join("tests", "resources", "file_with_lines.txt"), filter_empty=False)
+@read_lines("tests", "resources", "file_with_lines.txt", filter_empty=False)
 def read_lines():
     return read_lines.lines
 
 
-@read_json(os.path.join("tests", "resources", "json_file.json"))
+@read_json("tests", "resources", "json_file.json")
 def read_json():
     return read_json.json
 
