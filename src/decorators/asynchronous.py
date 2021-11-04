@@ -1,19 +1,18 @@
 from typing import Iterable, Callable
 from functools import wraps
 
-__all__ = [
-    'run_forever', 'run_thread', 'run_thread_pool', 'run_process'
-]
+__all__ = ["run_forever", "run_thread", "run_thread_pool", "run_process"]
 
 
 def run_thread(_func: Callable = None, *, daemon=False):
-
     def decorator(func: Callable):
         @wraps(func)
         def wrapper(*args, **kwargs):
             import threading
 
-            thread = threading.Thread(target=func, args=args, kwargs=kwargs, daemon=daemon)
+            thread = threading.Thread(
+                target=func, args=args, kwargs=kwargs, daemon=daemon
+            )
             thread.start()
             return thread
 
@@ -30,6 +29,7 @@ def run_thread_pool(args: Iterable):
         @wraps(func)
         def wrapper():
             from concurrent import futures
+
             with futures.ThreadPoolExecutor() as executor:
                 executor.map(func, args)
 
@@ -42,6 +42,7 @@ def run_process(func: Callable):
     @wraps(func)
     def wrapper(*args, **kwargs):
         import multiprocessing
+
         process = multiprocessing.Process(target=func, args=args, kwargs=kwargs)
         process.start()
         return process
@@ -49,14 +50,15 @@ def run_process(func: Callable):
     return wrapper
 
 
-def do_on_user_input(_func: Callable = None, *, prompt=''):
+def do_on_user_input(_func: Callable = None, *, prompt=""):
     def decorator(func: Callable):
         @wraps(func)
         def wrapper(*args, **kwargs):
             inp = input(prompt)
-            kwargs['user_input'] = inp
+            kwargs["user_input"] = inp
             ret = func(*args, **kwargs)
             return ret
+
         return wrapper
 
     if _func is None:
@@ -86,8 +88,8 @@ def non_blocking_user_input(func: Callable):
 
         while True:
             if not input_queue.qsize() == 0:
-                print('NOT EMTPY')
-                kwargs['user_input'] = input_queue.get()
+                print("NOT EMTPY")
+                kwargs["user_input"] = input_queue.get()
                 ret = func(*args, **kwargs)
                 return ret
 
@@ -96,13 +98,14 @@ def non_blocking_user_input(func: Callable):
 
 def run_on_every(_func: Callable = None, *, seconds=1.0):
     from apscheduler.schedulers.background import BackgroundScheduler
+
     sx = BackgroundScheduler()
 
     def decorator(func: Callable):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            kwargs['scheduler'] = sx
-            sx.add_job(func, 'interval', seconds=seconds, args=args, kwargs=kwargs)
+            kwargs["scheduler"] = sx
+            sx.add_job(func, "interval", seconds=seconds, args=args, kwargs=kwargs)
             sx.start()
 
         return wrapper
@@ -124,4 +127,5 @@ def run_forever(func: Callable):
         finally:
             loop.close()
         return ret
+
     return wrapper
