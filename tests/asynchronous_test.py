@@ -9,7 +9,7 @@ def test_run_on_thread(*args, **kwargs):
 
     seconds_to_sleep = 1
     time.sleep(seconds_to_sleep)
-    print(f'Printed after {seconds_to_sleep} seconds.')
+    print(f"Printed after {seconds_to_sleep} seconds.")
 
 
 class MyTestCase(unittest.TestCase):
@@ -17,5 +17,5 @@ class MyTestCase(unittest.TestCase):
         test_run_on_thread()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

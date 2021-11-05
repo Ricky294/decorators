@@ -1,24 +1,30 @@
 import json
 import os
 
+import pytest
+
 from decorators.reader import read_lines, read_json
 
-file_content = ['line 1\n', 'line 2\n', '\n', 'line 3\n', '\n', '\n', 'line 4']
+file_content = "line 1\nline 2\n\nline 3\n\n\nline 4"
 json_content = {
-            "key1": "val1",
-            "key2": 5,
-            "key3": [5, 10, 11],
-            "key4": {
-                "inner_key1": 20,
-                "inner_key2": "val2"
-            }
-        }
+    "key1": "val1",
+    "key2": 5,
+    "key3": [5, 10, 11],
+    "key4": {"inner_key1": 20, "inner_key2": "val2"},
+}
 
-with open(os.path.join("tests", 'resources', 'file_with_lines.txt'), 'w') as f:
-    f.writelines(file_content)
 
-with open(os.path.join("tests", "resources", "json_file.json"), 'w') as f:
-    f.write(json.dumps(json_content))
+@pytest.fixture(autouse=True)
+def setup_and_tear_down():
+    # SETUP
+    with open(os.path.join("tests", "resources", "empty_file.txt"), "w") as _:
+        pass
+
+    with open(os.path.join("tests", "resources", "file_with_lines.txt"), "w") as f:
+        f.write(file_content)
+
+    with open(os.path.join("tests", "resources", "json_file.json"), "w") as f:
+        f.write(json.dumps(json_content))
 
 
 @read_lines("tests", "resources", "empty_file.txt")
@@ -43,7 +49,7 @@ def read_json():
 
 def test_read_lines():
     assert read_lines_empty_file() == []
-    assert read_lines_filter_empty() == ['line 1\n', 'line 2\n', 'line 3\n', 'line 4']
+    assert read_lines_filter_empty() == ["line 1\n", "line 2\n", "line 3\n", "line 4"]
     assert read_lines()
 
 

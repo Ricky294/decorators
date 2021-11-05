@@ -1,18 +1,29 @@
 import numpy as np
 import pytest
 
-from decorators.core import flatten_dict, shuffle, return_not_none_or_empty, count_calls, singleton
+from decorators.core import (
+    flatten_dict,
+    shuffle,
+    return_not_none_or_empty,
+    count_calls,
+    singleton,
+)
 
 
 def test_flatten_dict():
-    assert flatten_dict(lambda: {
-        'a': {
-            'b': 5, 'x': 10, 'y': {
-                'q': 10
-            },
-        },
-        'b': 2
-    })() == {'b': 2, 'a.b': 5, 'a.x': 10, 'a.y.q': 10}
+    assert (
+        flatten_dict(
+            lambda: {
+                "a": {
+                    "b": 5,
+                    "x": 10,
+                    "y": {"q": 10},
+                },
+                "b": 2,
+            }
+        )()
+        == {"b": 2, "a.b": 5, "a.x": 10, "a.y.q": 10}
+    )
 
 
 def test_return_not_none_or_empty():
@@ -46,7 +57,6 @@ def test_count_calls():
 
 
 def test_singleton():
-
     @singleton
     class SingletonClass:
         pass

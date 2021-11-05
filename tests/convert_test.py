@@ -13,7 +13,7 @@ class DictObject:
 
 
 class SlotsObject:
-    __slots__ = ('x', 'y', 'z')
+    __slots__ = ("x", "y", "z")
 
     def __init__(self, x, y, z):
         self.x = x
@@ -21,17 +21,17 @@ class SlotsObject:
         self.z = z
 
 
-@to_series(index=('x', 'y', 'z'))
+@to_series(index=("x", "y", "z"))
 def tuple_to_series():
     return 5, 10, 15
 
 
-@to_series(index=('x', 'y', 'z'))
+@to_series(index=("x", "y", "z"))
 def list_to_series():
     return [5, 10, 15]
 
 
-@to_series(index=('x', 'y', 'z'))
+@to_series(index=("x", "y", "z"))
 def nparray_to_series():
     return np.array([5, 10, 15], dtype=np.int64)
 
@@ -48,7 +48,7 @@ def dict_object_to_series():
 
 @to_dataframe
 def dict_to_dataframe():
-    return {'x': [5, 10], 'y': [15, 20], 'z': [25, 30]}
+    return {"x": [5, 10], "y": [15, 20], "z": [25, 30]}
 
 
 @to_dataframe
@@ -61,7 +61,7 @@ def dict_object_to_dataframe():
     return DictObject([5, 10], [15, 20], [25, 30])
 
 
-@to_dataframe(columns=('x', 'y', 'z'))
+@to_dataframe(columns=("x", "y", "z"))
 def nparray_to_dataframe():
     return np.array([[5, 15, 25], [10, 20, 30]], dtype=np.int64)
 
@@ -71,8 +71,8 @@ def series_to_dataframe():
     return pd.Series([5, 10, 15, 20, 25, 30])
 
 
-ser = pd.Series([5, 10, 15], index=('x', 'y', 'z'))
-df = pd.DataFrame({'x': [5, 10], 'y': [15, 20], 'z': [25, 30]})
+ser = pd.Series([5, 10, 15], index=("x", "y", "z"))
+df = pd.DataFrame({"x": [5, 10], "y": [15, 20], "z": [25, 30]})
 
 
 def test_to_series():
@@ -92,4 +92,6 @@ def test_to_dataframe():
 
 
 def test_to_datetime():
-    assert to_datetime()(lambda: 1633071934)() == datetime.datetime.fromtimestamp(1633071934)
+    assert to_datetime()(lambda: 1633071934)() == datetime.datetime.fromtimestamp(
+        1633071934
+    )
