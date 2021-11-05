@@ -1,8 +1,8 @@
 # Custom ignores
 logs
 log
-test/resources/*
-tests/resources/*
+test/resources
+tests/resources
 
 .idea/
 

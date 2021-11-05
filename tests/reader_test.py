@@ -17,6 +17,10 @@ json_content = {
 @pytest.fixture(autouse=True)
 def setup_and_tear_down():
     # SETUP
+
+    if not os.path.isdir(os.path.join("tests", "resources")):
+        os.mkdir(os.path.join("tests", "resources"))
+
     with open(os.path.join("tests", "resources", "empty_file.txt"), "w") as _:
         pass
 
